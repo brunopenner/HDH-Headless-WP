@@ -12,10 +12,13 @@
 add_action('acf/init', 'acf_init_block_types');
 function acf_init_block_types()
 {
+	// register_block_type
+	wp_enqueue_script('fontawesome', get_template_directory_uri() . "/template-parts/fontawesome/all.min.js");
 	if (function_exists('register_block_type')) {
 		register_block_type(get_template_directory() . "/template-parts/blocks/ctaButton/block.json");
 		register_block_type(get_template_directory() . "/template-parts/blocks/propertySearch/block.json");
 		register_block_type(get_template_directory() . "/template-parts/blocks/formspreeForm/block.json");
+		register_block_type(get_template_directory() . "/template-parts/blocks/propertyFeatures/block.json");
 	}
 }
 
