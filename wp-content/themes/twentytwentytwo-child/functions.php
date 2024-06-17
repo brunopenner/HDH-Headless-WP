@@ -12,6 +12,18 @@
 add_action('acf/init', 'acf_init_block_types');
 function acf_init_block_types()
 {
+	add_filter('wp_graphql_blocks_process_attributes', function ($attributes, $data, $post_id) {
+		if ($data['blockName'] == 'acf/propertyfeatures') {
+			$attributes['price'] = get_field('price', $post_id) ?? "";
+			$attributes['bedrooms'] = get_field('bedrooms', $post_id) ?? "";
+			$attributes['bathrooms'] = get_field('bathrooms', $post_id) ?? "";
+			$attributes['has_parking'] = get_field('has_parking', $post_id) ?? "";
+			$attributes['pet_friendly'] = get_field('pet_friendly', $post_id) ?? "";
+		}
+
+		return $attributes;
+	}, 0, 3);
+
 	// register_block_type
 	wp_enqueue_script('fontawesome', get_template_directory_uri() . "/template-parts/fontawesome/all.min.js");
 	if (function_exists('register_block_type')) {
@@ -19,6 +31,7 @@ function acf_init_block_types()
 		register_block_type(get_template_directory() . "/template-parts/blocks/propertySearch/block.json");
 		register_block_type(get_template_directory() . "/template-parts/blocks/formspreeForm/block.json");
 		register_block_type(get_template_directory() . "/template-parts/blocks/propertyFeatures/block.json");
+		register_block_type(get_template_directory() . "/template-parts/blocks/tickItem/block.json");
 	}
 }
 
